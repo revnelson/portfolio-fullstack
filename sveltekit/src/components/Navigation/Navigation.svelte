@@ -14,7 +14,12 @@
 		{#if menuLinks}
 			{#each menuLinks as menuLink}
 				<li class="font-thin tracking-wider flex justify-center">
-					<a href={menuLink.url} on:click={drawerClose}>
+					<a
+						href={menuLink.url}
+						on:click={drawerClose}
+						data-sveltekit-preload-code
+						data-sveltekit-preload-data
+					>
 						<span class="py-16 px-4">
 							{menuLink.label}
 						</span>

@@ -38,7 +38,12 @@
 				<div class="short-description p-4 text-center">{project.short_description}</div>
 				<div class="links relative p-4">
 					<div class="info flex justify-center">
-						<a href={`/projects/${project.slug}`} class="btn variant-filled-primary no-underline">
+						<a
+							href={`/projects/${project.slug}`}
+							class="btn variant-filled-primary no-underline"
+							data-sveltekit-preload-code
+							data-sveltekit-preload-data
+						>
 							View details
 						</a>
 					</div>
