@@ -46,7 +46,7 @@
 			>
 			<a
 				href="/"
-				class="md:text-lg lg:text-xl uppercase hover:text-primary-800-100-token transition-colors tracking-widest font-thin"
+				class="md:text-lg lg:text-xl uppercase hover:text-primary-500-400-token py-2 px-0 sm:px-2 transition-all tracking-widest font-thin hover:font-bold hover:tracking-wide"
 			>
 				Michael Nelson
 			</a>
