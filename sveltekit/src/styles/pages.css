@@ -8,7 +8,7 @@
 			@apply w-full border-b-2 border-surface-900-50-token pt-8 font-bold;
 		}
 		h3 {
-			@apply w-full py-3 md:flex md:items-baseline;
+			@apply w-full py-3 md:flex md:items-baseline relative;
 			span {
 				@apply text-base flex flex-grow md:ml-2 md:border-l-2 md:border-surface-900-50-token md:pl-2;
 				location {
@@ -19,7 +19,7 @@
 				}
 			}
 			.work {
-				@apply md:absolute right-8 border-0;
+				@apply md:absolute right-0 border-0;
 			}
 		}
 		.work {
@@ -34,7 +34,7 @@
 			@apply flex items-center;
 		}
 		p a img {
-			@apply w-8 mr-4 dark:bg-white dark:rounded-full border-4 border-transparent dark:border-white;
+			@apply w-8 mr-4 dark:bg-white dark:rounded-full border-2 my-2 md:my-0 border-transparent dark:border-white;
 		}
 		ul {
 			@apply my-2 list-disc ml-4;
