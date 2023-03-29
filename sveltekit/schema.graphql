@@ -1,0 +1,512 @@
+"""ISO8601 Date values"""
+scalar Date
+
+"""BigInt value"""
+scalar GraphQLBigInt
+
+"""A Float or a String"""
+scalar GraphQLStringOrFloat
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type Query {
+  logos(filter: logos_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [logos!]!
+  logos_aggregated(filter: logos_filter, groupBy: [String], limit: Int, offset: Int, page: Int, search: String, sort: [String]): [logos_aggregated!]!
+  logos_by_id(id: ID!): logos
+  menu_links(filter: menu_links_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [menu_links!]!
+  menu_links_aggregated(filter: menu_links_filter, groupBy: [String], limit: Int, offset: Int, page: Int, search: String, sort: [String]): [menu_links_aggregated!]!
+  menu_links_by_id(id: ID!): menu_links
+  pages(filter: pages_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [pages!]!
+  pages_aggregated(filter: pages_filter, groupBy: [String], limit: Int, offset: Int, page: Int, search: String, sort: [String]): [pages_aggregated!]!
+  pages_by_id(id: ID!): pages
+  projects(filter: projects_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [projects!]!
+  projects_aggregated(filter: projects_filter, groupBy: [String], limit: Int, offset: Int, page: Int, search: String, sort: [String]): [projects_aggregated!]!
+  projects_by_id(id: ID!): projects
+  projects_logos(filter: projects_logos_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [projects_logos!]!
+  projects_logos_aggregated(filter: projects_logos_filter, groupBy: [String], limit: Int, offset: Int, page: Int, search: String, sort: [String]): [projects_logos_aggregated!]!
+  projects_logos_by_id(id: ID!): projects_logos
+  projects_skills(filter: projects_skills_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [projects_skills!]!
+  projects_skills_aggregated(filter: projects_skills_filter, groupBy: [String], limit: Int, offset: Int, page: Int, search: String, sort: [String]): [projects_skills_aggregated!]!
+  projects_skills_by_id(id: ID!): projects_skills
+}
+
+input count_function_filter_operators {
+  count: number_filter_operators
+}
+
+type count_functions {
+  count: Int
+}
+
+input date_filter_operators {
+  _between: [GraphQLStringOrFloat]
+  _eq: String
+  _gt: String
+  _gte: String
+  _in: [String]
+  _lt: String
+  _lte: String
+  _nbetween: [GraphQLStringOrFloat]
+  _neq: String
+  _nin: [String]
+  _nnull: Boolean
+  _null: Boolean
+}
+
+input datetime_function_filter_operators {
+  day: number_filter_operators
+  hour: number_filter_operators
+  minute: number_filter_operators
+  month: number_filter_operators
+  second: number_filter_operators
+  week: number_filter_operators
+  weekday: number_filter_operators
+  year: number_filter_operators
+}
+
+type datetime_functions {
+  day: Int
+  hour: Int
+  minute: Int
+  month: Int
+  second: Int
+  week: Int
+  weekday: Int
+  year: Int
+}
+
+type directus_files {
+  charset: String
+  description: String
+  duration: Int
+  embed: String
+  filename_disk: String
+  filename_download: String!
+  filesize: GraphQLBigInt
+  folder: String
+  height: Int
+  id: ID!
+  location: String
+  metadata: JSON
+  metadata_func: count_functions
+  modified_by: String
+  modified_on: Date
+  modified_on_func: datetime_functions
+  storage: String!
+  tags: JSON
+  tags_func: count_functions
+  title: String
+  type: String
+  uploaded_by: String
+  uploaded_on: Date
+  uploaded_on_func: datetime_functions
+  width: Int
+}
+
+input directus_files_filter {
+  _and: [directus_files_filter]
+  _or: [directus_files_filter]
+  charset: string_filter_operators
+  description: string_filter_operators
+  duration: number_filter_operators
+  embed: string_filter_operators
+  filename_disk: string_filter_operators
+  filename_download: string_filter_operators
+  filesize: number_filter_operators
+  folder: string_filter_operators
+  height: number_filter_operators
+  id: string_filter_operators
+  location: string_filter_operators
+  metadata: string_filter_operators
+  metadata_func: count_function_filter_operators
+  modified_by: string_filter_operators
+  modified_on: date_filter_operators
+  modified_on_func: datetime_function_filter_operators
+  storage: string_filter_operators
+  tags: string_filter_operators
+  tags_func: count_function_filter_operators
+  title: string_filter_operators
+  type: string_filter_operators
+  uploaded_by: string_filter_operators
+  uploaded_on: date_filter_operators
+  uploaded_on_func: datetime_function_filter_operators
+  width: number_filter_operators
+}
+
+type logos {
+  date_created: Date
+  date_created_func: datetime_functions
+  date_updated: Date
+  date_updated_func: datetime_functions
+  id: ID!
+  logo(filter: directus_files_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): directus_files
+  name: String
+  sort: Int
+  status: String
+  url: String
+  user_created: String
+  user_updated: String
+}
+
+type logos_aggregated {
+  avg: logos_aggregated_fields
+  avgDistinct: logos_aggregated_fields
+  count: logos_aggregated_count
+  countAll: Int
+  countDistinct: logos_aggregated_count
+  group: JSON
+  max: logos_aggregated_fields
+  min: logos_aggregated_fields
+  sum: logos_aggregated_fields
+  sumDistinct: logos_aggregated_fields
+}
+
+type logos_aggregated_count {
+  date_created: Int
+  date_updated: Int
+  id: Int
+  logo: Int
+  name: Int
+  sort: Int
+  status: Int
+  url: Int
+  user_created: Int
+  user_updated: Int
+}
+
+type logos_aggregated_fields {
+  sort: Float
+}
+
+input logos_filter {
+  _and: [logos_filter]
+  _or: [logos_filter]
+  date_created: date_filter_operators
+  date_created_func: datetime_function_filter_operators
+  date_updated: date_filter_operators
+  date_updated_func: datetime_function_filter_operators
+  id: string_filter_operators
+  logo: directus_files_filter
+  name: string_filter_operators
+  sort: number_filter_operators
+  status: string_filter_operators
+  url: string_filter_operators
+  user_created: string_filter_operators
+  user_updated: string_filter_operators
+}
+
+type menu_links {
+  date_created: Date
+  date_created_func: datetime_functions
+  date_updated: Date
+  date_updated_func: datetime_functions
+  id: ID!
+  label: String
+  sort: Int
+  status: String
+  url: String
+  user_created: String
+  user_updated: String
+}
+
+type menu_links_aggregated {
+  avg: menu_links_aggregated_fields
+  avgDistinct: menu_links_aggregated_fields
+  count: menu_links_aggregated_count
+  countAll: Int
+  countDistinct: menu_links_aggregated_count
+  group: JSON
+  max: menu_links_aggregated_fields
+  min: menu_links_aggregated_fields
+  sum: menu_links_aggregated_fields
+  sumDistinct: menu_links_aggregated_fields
+}
+
+type menu_links_aggregated_count {
+  date_created: Int
+  date_updated: Int
+  id: Int
+  label: Int
+  sort: Int
+  status: Int
+  url: Int
+  user_created: Int
+  user_updated: Int
+}
+
+type menu_links_aggregated_fields {
+  sort: Float
+}
+
+input menu_links_filter {
+  _and: [menu_links_filter]
+  _or: [menu_links_filter]
+  date_created: date_filter_operators
+  date_created_func: datetime_function_filter_operators
+  date_updated: date_filter_operators
+  date_updated_func: datetime_function_filter_operators
+  id: string_filter_operators
+  label: string_filter_operators
+  sort: number_filter_operators
+  status: string_filter_operators
+  url: string_filter_operators
+  user_created: string_filter_operators
+  user_updated: string_filter_operators
+}
+
+input number_filter_operators {
+  _between: [GraphQLStringOrFloat]
+  _eq: GraphQLStringOrFloat
+  _gt: GraphQLStringOrFloat
+  _gte: GraphQLStringOrFloat
+  _in: [GraphQLStringOrFloat]
+  _lt: GraphQLStringOrFloat
+  _lte: GraphQLStringOrFloat
+  _nbetween: [GraphQLStringOrFloat]
+  _neq: GraphQLStringOrFloat
+  _nin: [GraphQLStringOrFloat]
+  _nnull: Boolean
+  _null: Boolean
+}
+
+type pages {
+  date_created: Date
+  date_created_func: datetime_functions
+  date_updated: Date
+  date_updated_func: datetime_functions
+  description: String
+  id: ID!
+  slug: String
+  sort: Int
+  status: String
+  title: String
+  user_created: String
+  user_updated: String
+}
+
+type pages_aggregated {
+  avg: pages_aggregated_fields
+  avgDistinct: pages_aggregated_fields
+  count: pages_aggregated_count
+  countAll: Int
+  countDistinct: pages_aggregated_count
+  group: JSON
+  max: pages_aggregated_fields
+  min: pages_aggregated_fields
+  sum: pages_aggregated_fields
+  sumDistinct: pages_aggregated_fields
+}
+
+type pages_aggregated_count {
+  date_created: Int
+  date_updated: Int
+  description: Int
+  id: Int
+  slug: Int
+  sort: Int
+  status: Int
+  title: Int
+  user_created: Int
+  user_updated: Int
+}
+
+type pages_aggregated_fields {
+  id: Float
+  sort: Float
+}
+
+input pages_filter {
+  _and: [pages_filter]
+  _or: [pages_filter]
+  date_created: date_filter_operators
+  date_created_func: datetime_function_filter_operators
+  date_updated: date_filter_operators
+  date_updated_func: datetime_function_filter_operators
+  description: string_filter_operators
+  id: number_filter_operators
+  slug: string_filter_operators
+  sort: number_filter_operators
+  status: string_filter_operators
+  title: string_filter_operators
+  user_created: string_filter_operators
+  user_updated: string_filter_operators
+}
+
+type projects {
+  date_created: Date
+  date_created_func: datetime_functions
+  date_updated: Date
+  date_updated_func: datetime_functions
+  description: String
+  github: String
+  id: ID!
+  logo(filter: directus_files_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): directus_files
+  short_description: String
+  skills(filter: projects_skills_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [projects_skills]
+  skills_func: count_functions
+  slug: String!
+  sort: Int
+  status: String
+  title: String
+  url: String
+  user_created: String
+  user_updated: String
+}
+
+type projects_aggregated {
+  avg: projects_aggregated_fields
+  avgDistinct: projects_aggregated_fields
+  count: projects_aggregated_count
+  countAll: Int
+  countDistinct: projects_aggregated_count
+  group: JSON
+  max: projects_aggregated_fields
+  min: projects_aggregated_fields
+  sum: projects_aggregated_fields
+  sumDistinct: projects_aggregated_fields
+}
+
+type projects_aggregated_count {
+  date_created: Int
+  date_updated: Int
+  description: Int
+  github: Int
+  id: Int
+  logo: Int
+  short_description: Int
+  skills: Int
+  slug: Int
+  sort: Int
+  status: Int
+  title: Int
+  url: Int
+  user_created: Int
+  user_updated: Int
+}
+
+type projects_aggregated_fields {
+  sort: Float
+}
+
+input projects_filter {
+  _and: [projects_filter]
+  _or: [projects_filter]
+  date_created: date_filter_operators
+  date_created_func: datetime_function_filter_operators
+  date_updated: date_filter_operators
+  date_updated_func: datetime_function_filter_operators
+  description: string_filter_operators
+  github: string_filter_operators
+  id: string_filter_operators
+  logo: directus_files_filter
+  short_description: string_filter_operators
+  skills: projects_skills_filter
+  skills_func: count_function_filter_operators
+  slug: string_filter_operators
+  sort: number_filter_operators
+  status: string_filter_operators
+  title: string_filter_operators
+  url: string_filter_operators
+  user_created: string_filter_operators
+  user_updated: string_filter_operators
+}
+
+type projects_logos {
+  id: ID!
+  logos_id(filter: logos_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): logos
+  projects_id(filter: projects_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): projects
+}
+
+type projects_logos_aggregated {
+  avg: projects_logos_aggregated_fields
+  avgDistinct: projects_logos_aggregated_fields
+  count: projects_logos_aggregated_count
+  countAll: Int
+  countDistinct: projects_logos_aggregated_count
+  group: JSON
+  max: projects_logos_aggregated_fields
+  min: projects_logos_aggregated_fields
+  sum: projects_logos_aggregated_fields
+  sumDistinct: projects_logos_aggregated_fields
+}
+
+type projects_logos_aggregated_count {
+  id: Int
+  logos_id: Int
+  projects_id: Int
+}
+
+type projects_logos_aggregated_fields {
+  id: Float
+}
+
+input projects_logos_filter {
+  _and: [projects_logos_filter]
+  _or: [projects_logos_filter]
+  id: number_filter_operators
+  logos_id: logos_filter
+  projects_id: projects_filter
+}
+
+type projects_skills {
+  collection: String
+  id: ID!
+  item: projects_skills_item_union
+  projects_id(filter: projects_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): projects
+}
+
+type projects_skills_aggregated {
+  avg: projects_skills_aggregated_fields
+  avgDistinct: projects_skills_aggregated_fields
+  count: projects_skills_aggregated_count
+  countAll: Int
+  countDistinct: projects_skills_aggregated_count
+  group: JSON
+  max: projects_skills_aggregated_fields
+  min: projects_skills_aggregated_fields
+  sum: projects_skills_aggregated_fields
+  sumDistinct: projects_skills_aggregated_fields
+}
+
+type projects_skills_aggregated_count {
+  collection: Int
+  id: Int
+  item: Int
+  projects_id: Int
+}
+
+type projects_skills_aggregated_fields {
+  id: Float
+}
+
+input projects_skills_filter {
+  _and: [projects_skills_filter]
+  _or: [projects_skills_filter]
+  collection: string_filter_operators
+  id: number_filter_operators
+  item__logos: logos_filter
+  projects_id: projects_filter
+}
+
+union projects_skills_item_union = logos
+
+input string_filter_operators {
+  _contains: String
+  _empty: Boolean
+  _ends_with: String
+  _eq: String
+  _icontains: String
+  _in: [String]
+  _ncontains: String
+  _nempty: Boolean
+  _nends_with: String
+  _neq: String
+  _nin: [String]
+  _nnull: Boolean
+  _nstarts_with: String
+  _null: Boolean
+  _starts_with: String
+}

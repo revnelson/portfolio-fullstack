@@ -1,0 +1,17 @@
+query Projects {
+	projects(filter: { status: { _eq: "published" } }) {
+		id
+		slug
+		title
+		short_description
+		url
+		logo {
+			id
+			width
+			height
+			type
+			title
+			description
+		}
+	}
+}

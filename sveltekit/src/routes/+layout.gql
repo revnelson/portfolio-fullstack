@@ -1,0 +1,7 @@
+query MenuLinks {
+	menu_links(filter: { status: { _eq: "published" } }) {
+		id
+		label
+		url
+	}
+}

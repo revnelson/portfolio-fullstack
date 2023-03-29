@@ -1,0 +1,15 @@
+query Logos {
+	logos {
+		id
+		name
+		url
+		logo {
+			id
+			width
+			height
+			type
+			title
+			description
+		}
+	}
+}

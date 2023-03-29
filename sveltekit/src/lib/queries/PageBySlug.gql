@@ -1,0 +1,8 @@
+query PageBySlug($slug: String!) {
+	pages(filter: { status: { _eq: "published" }, slug: { _eq: $slug } }) {
+		id
+		title
+		slug
+		description
+	}
+}

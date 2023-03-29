@@ -1,0 +1,34 @@
+query ProjectBySlug($slug: String!) {
+	projects(filter: { slug: { _eq: $slug }, status: { _eq: "published" } }) {
+		id
+		title
+		description
+		github
+		url
+		logo {
+			id
+			width
+			height
+			type
+			title
+			description
+		}
+		skills {
+			item {
+				... on logos {
+					id
+					name
+					url
+					logo {
+						id
+						width
+						height
+						type
+						title
+						description
+					}
+				}
+			}
+		}
+	}
+}

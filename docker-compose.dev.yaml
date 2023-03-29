@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  sveltekit:
+    container_name: ${PROJECT_NAME}_sveltekit_dev
+    image: sveltekit_dev
+    restart: on-failure
+    build:
+      context: ./sveltekit
+      dockerfile: Dockerfile.dev
+    labels:
+      caddy: ${FRONTEND_DOMAIN_DEV?err}
+      caddy.reverse_proxy: "{{upstreams 5173}}"
+    volumes:
+      - ./sveltekit:/usr/src/app
+    networks:
+      - caddy
+
+networks:
+  caddy:
+    external: true
