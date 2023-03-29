@@ -1,7 +1,7 @@
 <script lang="ts">
 	import SvelteMarkdown from 'svelte-markdown';
 
-	import CodeMd from '$components/Markdown/CodeMD';
+	import CodeMD from '$components/Markdown/CodeMD';
 	import '$styles/pages.css';
 
 	import type { PageData } from './$types';
@@ -24,7 +24,7 @@
 
 		{#if page?.description}
 			<div class={page.slug}>
-				<SvelteMarkdown source={page.description} />
+				<SvelteMarkdown source={page.description} renderers={{ code: CodeMD }} />
 			</div>
 		{/if}
 	{:else}
