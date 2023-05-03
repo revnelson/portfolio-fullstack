@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Avatar } from '@skeletonlabs/skeleton';
+	import { Avatar, ProgressRadial } from '@skeletonlabs/skeleton';
 	import { PUBLIC_API_URL } from '$env/static/public';
 
 	import type { PageData } from './$types';
@@ -7,13 +7,16 @@
 	export let data: PageData;
 
 	$: ({ Projects } = data);
-	console.log('Data', $Projects);
 </script>
 
 <svelte:head><title>Projects - M. Nelson</title></svelte:head>
 
-{#if $Projects.data?.projects}
-	<div class="grid md:grid-cols-2 gap-4">
+{#if $Projects.fetching}
+	<div class="h-screen -m-16 flex justify-center items-center">
+		<ProgressRadial value={undefined} />
+	</div>
+{:else if $Projects.data?.projects}
+	<div class="grid md:grid-cols-2 gap-4 p-8">
 		{#each $Projects.data.projects as project}
 			<div class="rounded overflow-hidden bg-surface-100-800-token">
 				<div class="px-4 py-5 sm:px-6">

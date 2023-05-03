@@ -5,6 +5,7 @@
 	import '$styles/pages.css';
 
 	import type { PageData } from './$types';
+	import { ProgressRadial } from '@skeletonlabs/skeleton';
 	export let data: PageData;
 
 	$: ({ PageBySlug } = data);
@@ -18,8 +19,12 @@
 	</title>
 </svelte:head>
 
-<div class="api-page">
-	{#if page?.id}
+<div class="api-page p-8">
+	{#if $PageBySlug.fetching}
+		<div class="h-screen -m-32 flex justify-center items-center">
+			<ProgressRadial value={undefined} />
+		</div>
+	{:else if page?.id}
 		<!-- <h2 class="dark:text-white">{page.title}</h2> -->
 
 		{#if page?.description}

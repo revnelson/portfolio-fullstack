@@ -13,7 +13,7 @@
 	const show = lang.split('_').length > 1 ? lang.split('_')[1] === 'show' : false;
 </script>
 
-<div class="not-prose">
+<div class="custom-code">
 	{#if show}
 		<CodeBlock code={text} language={lang.split('_')[0]} />
 	{:else}

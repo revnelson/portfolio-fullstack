@@ -7,8 +7,8 @@ const config = {
 	},
 	plugins: {
 		'houdini-svelte': {}
-	},
-	cacheBufferSize: 1
+	}
+	// cacheBufferSize: 1
 };
 
 export default config;

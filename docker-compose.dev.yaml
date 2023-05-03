@@ -2,15 +2,17 @@ version: "3.8"
 
 services:
   sveltekit:
-    container_name: ${PROJECT_NAME}_sveltekit_dev
-    image: sveltekit_dev
+    container_name: ${PROJECT_NAME?err}_sveltekit_dev
+    image: ${PROJECT_NAME?err}_sveltekit_dev
     restart: on-failure
     build:
       context: ./sveltekit
       dockerfile: Dockerfile.dev
+    environment:
+      PORT: ${FRONTEND_PORT_DEV?err}
     labels:
       caddy: ${FRONTEND_DOMAIN_DEV?err}
-      caddy.reverse_proxy: "{{upstreams 5173}}"
+      caddy.reverse_proxy: "{{upstreams ${FRONTEND_PORT_DEV?err}}}"
     volumes:
       - ./sveltekit:/usr/src/app
     networks:

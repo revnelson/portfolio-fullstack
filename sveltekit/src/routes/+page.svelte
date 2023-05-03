@@ -13,7 +13,7 @@
 	<title>Michael Nelson</title>
 </svelte:head>
 
-<div class="container mx-auto lg:p-8 space-y-8">
+<div class="container mx-auto p-8 lg:p-16 space-y-8">
 	<div class="flex flex-col md:flex-row justify-center items-center w-full">
 		<div class="md:pr-8">
 			<Avatar src="./michael-nelson-profile-close.jpg" width="w-24" />

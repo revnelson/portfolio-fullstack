@@ -1,26 +1,41 @@
+# stage build
 FROM node:18
 
-LABEL Developer="Michael Nelson"
+WORKDIR /app
 
-WORKDIR /usr/src/app
-
-# Copy over `package.json` and lock files to optimize the build process
-COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "yarn.lock", "./"]
-# Install Node modules
-RUN yarn
-
-# Copy over rest of the project files
 COPY . .
 
-RUN yarn build
+RUN rm -rf '$houdini' .svelte-kit
 
-# # Delete source code files that were used to build the app that are no longer needed
-# RUN rm -rf src/ static/ docker-compose.yml
-RUN ls
+# clean install all dependencies
+RUN npm ci
+
+# remove potential security issues
+RUN npm audit fix
+
+# build SvelteKit app
+RUN npm run build
+
+# stage run
+FROM node:18
+
+WORKDIR /app
+
+# copy dependency list
+COPY --from=0 /app/package*.json ./
+
+# clean install dependencies, no devDependencies, no prepare script
+RUN npm ci --production --ignore-scripts
+
+# remove potential security issues
+RUN npm audit fix
+
+# copy built SvelteKit app to /app
+COPY --from=0 /app/build ./
 
 # Expose port 5174 for SvelteKit
-EXPOSE 5174
+ARG PORT
+EXPOSE ${PORT}
 
-ENV PORT=5174
-
-CMD ["node", "build"]
+ENTRYPOINT node index.js
+CMD ["-r dotenv/config"]

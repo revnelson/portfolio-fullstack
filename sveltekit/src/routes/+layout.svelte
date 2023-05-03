@@ -3,14 +3,30 @@
 	import '$styles/themes/crimson.css';
 	import '@skeletonlabs/skeleton/styles/all.css';
 
-	import { AppBar, AppShell, Drawer, drawerStore, LightSwitch } from '@skeletonlabs/skeleton';
+	import {
+		AppBar,
+		AppShell,
+		Avatar,
+		Drawer,
+		drawerStore,
+		LightSwitch,
+		ListBox,
+		ListBoxItem,
+		popup,
+		storePopup,
+		type PopupSettings
+	} from '@skeletonlabs/skeleton';
+	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
+	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
+	let comboboxValue: string;
 
 	import Navigation from '$components/Navigation';
 	import Transition from '$components/Transition';
 	import Github from '$icons/Github.svelte';
 
 	import type { PageData } from './$houdini';
-	import { cache } from '$houdini';
+	import { goto } from '$app/navigation';
+	import { browser } from '$app/environment';
 	export let data: PageData;
 
 	function drawerOpen(): void {
@@ -19,12 +35,55 @@
 
 	$: ({ MenuLinks } = data);
 
-	cache.markStale();
+	let popupSettings: PopupSettings = {
+		// Set the event as: click | hover | hover-click | focus | focus-click
+		event: 'click',
+		// Provide a matching 'data-popup' value.
+		target: 'github'
+	};
+
+	const openInNewTab = (url: string) => {
+		browser && window.open(url, '_blank')?.focus();
+	};
 </script>
 
 <Drawer width="w-64">
 	<Navigation menuLinks={$MenuLinks.data?.menu_links} />
 </Drawer>
+
+<div class="card w-48 shadow-xl py-2 z-20" data-popup="github">
+	<!-- Listbox -->
+	<ListBox rounded="rounded">
+		<ListBoxItem
+			bind:group={comboboxValue}
+			name="medium"
+			value="personal"
+			on:click={() => {
+				openInNewTab('https://github.com/revnelson');
+			}}
+		>
+			<svelte:fragment slot="lead">
+				<Avatar src="/michael-nelson-profile-close.jpg" width="w-8" />
+			</svelte:fragment>
+			<div class="ring-0 focus:ring-0">Personal</div>
+		</ListBoxItem>
+		<ListBoxItem
+			bind:group={comboboxValue}
+			name="medium"
+			value="ndott"
+			on:click={() => {
+				openInNewTab('https://github.com/nelson-tech');
+			}}
+		>
+			<svelte:fragment slot="lead">
+				<Avatar initials="nt" width="w-8" />
+			</svelte:fragment>
+			<div>nelson.tech</div>
+		</ListBoxItem>
+	</ListBox>
+	<!-- Arrow -->
+	<div class="arrow bg-surface-100-800-token" />
+</div>
 
 <AppShell
 	regionPage="relative"
@@ -52,11 +111,11 @@
 			</a>
 			<svelte:fragment slot="trail">
 				<LightSwitch rounded="rounded" />
-				<a href="https://github.com/nelson-tech" target="_blank" title="Github">
+				<div use:popup={popupSettings}>
 					<Github
 						class="w-8 fill-token border-2 rounded-full border-surface-300-600-token hover:!border-primary-500 transition-all"
 					/>
-				</a>
+				</div>
 			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
@@ -68,7 +127,7 @@
 	</svelte:fragment>
 
 	<Transition refresh={data?.key}>
-		<div class="p-8 max-w-7xl mx-auto">
+		<div class="max-w-7xl mx-auto">
 			<slot />
 		</div>
 	</Transition>

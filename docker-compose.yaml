@@ -3,35 +3,37 @@ version: "3.8"
 services:
   # sveltekit-staging:
   #   container_name: ${PROJECT_NAME}_sveltekit_staging
-  #   image: sveltekit_staging
+  #   image: ${PROJECT_NAME}_sveltekit_staging
   #   restart: on-failure
   #   build:
   #     context: ./sveltekit
   #     dockerfile: Dockerfile
+  #   environment:
+  #     PORT: ${FRONTEND_PORT_STAGING?err}
+  #     ORIGIN: https://${FRONTEND_DOMAIN_STAGING?err}
   #   labels:
   #     caddy: ${FRONTEND_DOMAIN_STAGING?err}
-  #     caddy.reverse_proxy: "{{upstreams 5174}}"
-  #   volumes:
-  #     - ./sveltekit:/usr/src/app
+  #     caddy.reverse_proxy: "{{upstreams ${FRONTEND_PORT_STAGING?err}}}"
   #   networks:
   #     - caddy
 
-  # sveltekit:
-  #   container_name: ${PROJECT_NAME}_sveltekit
-  #   image: sveltekit
-  #   restart: on-failure
-  #   build:
-  #     context: ./sveltekit
-  #     dockerfile: Dockerfile.dev
-  #   labels:
-  #     caddy: ${FRONTEND_DOMAIN?err}
-  #     caddy.reverse_proxy: "{{upstreams 5173}}"
-  #   # ports:
-  #   #   - 5173:5173
-  #   volumes:
-  #     - ./sveltekit:/usr/src/app
-  #   networks:
-  #     - caddy
+  sveltekit:
+    container_name: ${PROJECT_NAME?err}_sveltekit
+    image: ${PROJECT_NAME?err}_sveltekit
+    restart: on-failure
+    build:
+      context: ./sveltekit
+      dockerfile: Dockerfile
+    environment:
+      PORT: ${FRONTEND_PORT?err}
+      ORIGIN: https://${FRONTEND_DOMAIN?err}
+    labels:
+      caddy: ${FRONTEND_DOMAIN?err}
+      caddy.reverse_proxy: "{{upstreams ${FRONTEND_PORT?err}}}"
+    depends_on:
+      - directus
+    networks:
+      - caddy
 
   # front:
   #   container_name: ${PROJECT_NAME}_caddy
