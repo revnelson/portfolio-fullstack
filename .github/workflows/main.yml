@@ -19,24 +19,23 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           
-      - name: Change directory
-        run: cd sveltekit
-          
       - name: Create env file
+        working-directory: ./sveltekit
         run: |
           echo "${{ secrets.ENV_FILE }}" > .env
           
-      - name: Install npm dependencies
-        run: npm install
-      - name: Run build task
-        run: npm run build --if-present
+      - name: Install npm dependencies and build
+        working-directory: ./sveltekit
+        run: |
+          npm install
+          npm run build --if-present
         
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@main
         env:
             SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
             ARGS: "-rlgoDzvc -i --delete"
-            SOURCE: ${{ secrets.SOURCE }}
+            SOURCE: sveltekit/${{ secrets.SOURCE }}
             REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
             REMOTE_USER: ${{ secrets.REMOTE_USER }}
             TARGET: ${{ secrets.REMOTE_TARGET }}
