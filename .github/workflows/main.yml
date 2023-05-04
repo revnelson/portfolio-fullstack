@@ -35,14 +35,15 @@ jobs:
         env:
             SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
             ARGS: "-rlgoDzvc -i --delete"
-            SOURCE: sveltekit/build/
+            SOURCE: sveltekit/
             REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
             REMOTE_USER: ${{ secrets.REMOTE_USER }}
             REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
             TARGET: ${{ secrets.REMOTE_TARGET }}
+            EXCLUDE: "'/$houdini', /Dockerfile, /houdini.config.js, /postcss.config.cjs, /schema.graphql, /static/, /tailwind.config.cjs, /vite.config.ts, /Dockerfile.dev, /README.md, /src/, /svelte.config.js, tsconfig.json, /node_modules/"
             SCRIPT_AFTER: |
               PATH="$PATH:${{ secrets.PATH }}"
               cd ${{ secrets.REMOTE_TARGET }}
               pm2 delete ${{ secrets.PM2_NAME }} || :
-              PORT=${{ secrets.PRODUCTION_PORT }} pm2 start index.js --name '${{ secrets.PM2_NAME }}'
+              PORT=${{ secrets.PRODUCTION_PORT }} pm2 start build/index.js --name '${{ secrets.PM2_NAME }}'
               pm2 save
