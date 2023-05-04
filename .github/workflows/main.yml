@@ -41,5 +41,6 @@ jobs:
             REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
             TARGET: ${{ secrets.REMOTE_TARGET }}
             SCRIPT_AFTER: |
-              ${{ secrets.PM2 }} delete ${{ secrets.PM2_NAME }} || :
-              PORT=${{ secrets.PRODUCTION_PORT }} ${{ secrets.PM2 }} start ${{ secrets.secrets.REMOTE_TARGET }}/index.js --name '${{ secrets.PM2_NAME }}'
+              echo "${PATH}"
+              pm2 delete ${{ secrets.PM2_NAME }} || :
+              PORT=${{ secrets.PRODUCTION_PORT }} pm2 start ${{ secrets.secrets.REMOTE_TARGET }}/index.js --name '${{ secrets.PM2_NAME }}'
