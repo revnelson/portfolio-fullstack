@@ -18,7 +18,7 @@
 				</dl>
 			</div>
 			<div class="rounded-2xl bg-surface-100-800-token p-8">
-				<h3 class="text-base font-semibold leading-7">Phone</h3>
+				<h3 class="text-base font-semibold leading-7">Text/Call</h3>
 				<dl class="mt-3 space-y-1 text-sm leading-6">
 					<div class="mt-1">
 						<dt class="sr-only">Phone number</dt>
