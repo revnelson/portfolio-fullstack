@@ -35,14 +35,15 @@ jobs:
         env:
             SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
             ARGS: "-rlgoDzvc -i --delete"
-            SOURCE: sveltekit/${{ secrets.SOURCE }}
+            SOURCE: sveltekit
             REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
             REMOTE_USER: ${{ secrets.REMOTE_USER }}
             REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
             TARGET: ${{ secrets.REMOTE_TARGET }}
             SCRIPT_AFTER: |
+              ls ${{ secrets.REMOTE_TARGET }}
               PATH="$PATH:${{ secrets.PATH }}"
               pm2 delete ${{ secrets.PM2_NAME }} || :
-              PORT=${{ secrets.PRODUCTION_PORT }} pm2 start ${{ secrets.REMOTE_TARGET }}/index.js \
+              PORT=${{ secrets.PRODUCTION_PORT }} pm2 start ${{ secrets.REMOTE_TARGET }}/build/index.js \
               --name '${{ secrets.PM2_NAME }}'
               pm2 save
