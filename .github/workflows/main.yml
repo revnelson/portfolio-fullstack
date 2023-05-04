@@ -50,7 +50,7 @@ jobs:
             REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
             REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
             REMOTE_USER: ${{ secrets.REMOTE_USER }}
-            TARGET: ${{ secrets.REMOTE_TARGET }}/build
+            TARGET: ${{ secrets.REMOTE_TARGET }}
             SCRIPT_AFTER: |
               PATH="$PATH:${{ secrets.PATH }}"
               cd ${{ secrets.REMOTE_TARGET }}
