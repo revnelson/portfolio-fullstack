@@ -30,23 +30,13 @@ jobs:
           npm install
           npm run build --if-present
           
-      - name: Copy node_modules
-        uses: easingthemes/ssh-deploy@main
-        env:
-            SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-            ARGS: "-rlgoDzvc -i --delete"
-            SOURCE: "sveltekit/node_modules/"
-            REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-            REMOTE_USER: ${{ secrets.REMOTE_USER }}
-            REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
-            TARGET: ${{ secrets.REMOTE_TARGET }}/node_modules
-          
       - name: Deploy build
         uses: easingthemes/ssh-deploy@main
         env:
             SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
             ARGS: "-rlgoDzvc -i --delete"
-            SOURCE: "sveltekit/build/"
+            SOURCE: sveltekit/
+            EXCLUDE: ${{ secrets.EXCLUDE_FILES }}
             REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
             REMOTE_USER: ${{ secrets.REMOTE_USER }}
             REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
