@@ -4,6 +4,7 @@ services:
   directus:
     container_name: ${PROJECT_NAME?err}_api
     image: directus/directus:${DIRECTUS_VERSION?err}
+    restart: unless-stopped
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./config.json:/directus/config.json
@@ -41,11 +42,11 @@ services:
   api-cache:
     container_name: ${PROJECT_NAME?err}_api_cache
     image: redis:${REDIS_VERSION?err}
+    restart: unless-stopped
     volumes:
       - /etc/localtime:/etc/localtime:ro
     networks:
       - api
-
 
 networks:
   api:
