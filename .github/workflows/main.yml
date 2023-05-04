@@ -19,6 +19,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           
+      - name: Change directory
+        run: cd sveltekit
+          
       - name: Create env file
         run: |
           echo "${{ secrets.ENV_FILE }}" > .env
