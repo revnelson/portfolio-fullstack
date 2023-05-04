@@ -5,19 +5,10 @@ services:
     container_name: ${PROJECT_NAME?err}_sveltekit_dev
     image: ${PROJECT_NAME?err}_sveltekit_dev
     restart: on-failure
+    ports:
+      - 5173:5173
     build:
       context: ./sveltekit
       dockerfile: Dockerfile.dev
-    environment:
-      PORT: ${FRONTEND_PORT_DEV?err}
-    labels:
-      caddy: ${FRONTEND_DOMAIN_DEV?err}
-      caddy.reverse_proxy: "{{upstreams ${FRONTEND_PORT_DEV?err}}}"
     volumes:
       - ./sveltekit:/usr/src/app
-    networks:
-      - caddy
-
-networks:
-  caddy:
-    external: true

@@ -1,0 +1,52 @@
+version: "3.8"
+
+services:
+  directus:
+    container_name: ${PROJECT_NAME?err}_api
+    image: directus/directus:${DIRECTUS_VERSION?err}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./config.json:/directus/config.json
+      - /etc/mysql/ssl/client-cert.pem:/data/cert.pem
+    ports:
+      - 8585:8055
+    environment:
+      KEY: ${DIRECTUS_KEY?err}
+      SECRET: ${DIRECTUS_SECRET?err}
+      ADMIN_EMAIL: ${DIRECTUS_ADMIN_EMAIL?err}
+      ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD?err}
+      PUBLIC_URL: ${DIRECTUS_PUBLIC_URL?err}
+      CONFIG_PATH: ${DIRECTUS_CONFIG_PATH?err}
+      DB_HOST: ${DB_HOST?err}
+      DB_PORT: ${DB_PORT?err}
+      DB_CLIENT: "mysql"
+      DB_DATABASE: ${DB_DATABASE?err}
+      DB_USER: ${DB_USER?err}
+      DB_PASSWORD: ${DB_PASSWORD?err}
+      DB_SSL__REQUIRE: ${DB_SSL__REQUIRE?err}
+      DB_SSL__REJECT_UNAUTHORIZED: ${DB_SSL__REJECT_UNAUTHORIZED?err}
+      DB_SSL__CA: ${DB_SSL__CA?err}
+      STORAGE_LOCATIONS: ${STORAGE_LOCATIONS?err}
+      STORAGE_AWS_DRIVER: ${STORAGE_AWS_DRIVER?err}
+      STORAGE_AWS_ROOT: ${STORAGE_AWS_ROOT?err}
+      STORAGE_AWS_BUCKET: ${STORAGE_AWS_BUCKET?err}
+      STORAGE_AWS_REGION: ${STORAGE_AWS_REGION?err}
+      STORAGE_AWS_KEY: ${STORAGE_AWS_KEY?err}
+      STORAGE_AWS_SECRET: ${STORAGE_AWS_SECRET?err}
+    networks:
+      - api
+    depends_on:
+      - api-cache
+
+  api-cache:
+    container_name: ${PROJECT_NAME?err}_api_cache
+    image: redis:${REDIS_VERSION?err}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - api
+
+
+networks:
+  api:
+    name: ${PROJECT_NAME?err}_api

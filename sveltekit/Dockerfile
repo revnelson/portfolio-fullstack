@@ -25,17 +25,16 @@ WORKDIR /app
 COPY --from=0 /app/package*.json ./
 
 # clean install dependencies, no devDependencies, no prepare script
-RUN npm ci --production --ignore-scripts
+RUN npm ci
 
-# remove potential security issues
-RUN npm audit fix
+# # remove potential security issues
+# RUN npm audit fix
 
 # copy built SvelteKit app to /app
 COPY --from=0 /app/build ./
 
-# Expose port 5174 for SvelteKit
-ARG PORT
-EXPOSE ${PORT}
+# Expose port 3000 for SvelteKit
+EXPOSE 3000
 
 ENTRYPOINT node index.js
 CMD ["-r dotenv/config"]
