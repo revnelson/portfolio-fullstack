@@ -30,16 +30,26 @@ jobs:
           npm install
           npm run build --if-present
           
+      - name: SSH Remote Commands
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          port: ${{ secrets.REMOTE_PORT }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            mkdir -p ${{ secrets.REMOTE_TARGET }}
+          
       - name: Deploy build
         uses: easingthemes/ssh-deploy@main
         env:
             SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
             ARGS: "-rlgoDzvc -i --delete"
             SOURCE: sveltekit/
-            EXCLUDE: ${{ secrets.EXCLUDE_FILES }}
+            EXCLUDE: "${{ secrets.EXCLUDE_FILES }}"
             REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-            REMOTE_USER: ${{ secrets.REMOTE_USER }}
             REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
+            REMOTE_USER: ${{ secrets.REMOTE_USER }}
             TARGET: ${{ secrets.REMOTE_TARGET }}/build
             SCRIPT_AFTER: |
               PATH="$PATH:${{ secrets.PATH }}"
