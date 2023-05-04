@@ -13,7 +13,23 @@ jobs:
         node-version: [18.x]
     steps:
       - uses: actions/checkout@v3.5.2
-        
+      
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: ${{ matrix.node-version }}
+          
+      - name: Create env file
+        working-directory: ./sveltekit
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > .env
+          
+      - name: Install npm dependencies and build
+        working-directory: ./sveltekit
+        run: |
+          npm install
+          npm run build --if-present
+          
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@main
         env:
