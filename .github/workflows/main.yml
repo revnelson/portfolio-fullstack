@@ -30,7 +30,7 @@ jobs:
           npm install
           npm run build --if-present
         
-      - name: Deploy to Server
+      - name: Copy to Server
         uses: easingthemes/ssh-deploy@main
         env:
             SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -40,7 +40,16 @@ jobs:
             REMOTE_USER: ${{ secrets.REMOTE_USER }}
             REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
             TARGET: ${{ secrets.REMOTE_TARGET }}
-            SCRIPT_AFTER: |
-              echo "${PATH}"
-              pm2 delete ${{ secrets.PM2_NAME }} || :
-              PORT=${{ secrets.PRODUCTION_PORT }} pm2 start ${{ secrets.secrets.REMOTE_TARGET }}/index.js --name '${{ secrets.PM2_NAME }}'
+            
+      - name: Remote SSH Commands
+        uses: fifsky/ssh-action@v0.0.6
+        with:
+          command: |
+            pm2 delete ${{ secrets.PM2_NAME }} || :
+            PORT=${{ secrets.PRODUCTION_PORT }} pm2 start ${{ secrets.secrets.REMOTE_TARGET }}/index.js --name '${{ secrets.PM2_NAME }}'
+          host: ${{ secrets.REMOTE_HOST }}
+          user: ${{ secrets.REMOTE_USER }}
+          port: ${{ secrets.REMOTE_PORT }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          # SSH parameters for example: -tt.
+          # args: # optional
