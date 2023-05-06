@@ -63,7 +63,7 @@
 			}}
 		>
 			<svelte:fragment slot="lead">
-				<Avatar src="/logo-icon.svg" background="white" width="w-8 p-2" />
+				<Avatar src="/logo-icon-padded.png" background="white" width="w-8 p-2" />
 			</svelte:fragment>
 			<div>nelson.tech</div>
 		</ListBoxItem>
