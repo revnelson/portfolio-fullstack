@@ -57,19 +57,6 @@
 		<ListBoxItem
 			bind:group={comboboxValue}
 			name="medium"
-			value="personal"
-			on:click={() => {
-				openInNewTab('https://github.com/revnelson');
-			}}
-		>
-			<svelte:fragment slot="lead">
-				<Avatar src="/michael-nelson-profile-close.jpg" width="w-8" />
-			</svelte:fragment>
-			<div class="ring-0 focus:ring-0">Personal</div>
-		</ListBoxItem>
-		<ListBoxItem
-			bind:group={comboboxValue}
-			name="medium"
 			value="ndott"
 			on:click={() => {
 				openInNewTab('https://github.com/nelson-tech');
@@ -79,6 +66,19 @@
 				<Avatar initials="nt" width="w-8" />
 			</svelte:fragment>
 			<div>nelson.tech</div>
+		</ListBoxItem>
+		<ListBoxItem
+			bind:group={comboboxValue}
+			name="medium"
+			value="personal"
+			on:click={() => {
+				openInNewTab('https://github.com/revnelson');
+			}}
+		>
+			<svelte:fragment slot="lead">
+				<Avatar src="/michael-nelson-profile-close.jpg" width="w-8" />
+			</svelte:fragment>
+			<div class="ring-0 focus:ring-0">Personal</div>
 		</ListBoxItem>
 	</ListBox>
 	<!-- Arrow -->
@@ -113,7 +113,7 @@
 				<LightSwitch rounded="rounded" />
 				<div use:popup={popupSettings}>
 					<Github
-						class="w-8 fill-token border-2 rounded-full border-surface-300-600-token hover:!border-primary-500 transition-all"
+						class="w-8 fill-token border-2 rounded-full border-surface-300-600-token hover:!border-primary-500 transition-all cursor-pointer"
 					/>
 				</div>
 			</svelte:fragment>

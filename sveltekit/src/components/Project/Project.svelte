@@ -1,11 +1,16 @@
 <script lang="ts">
 	import SvelteMarkdown from 'svelte-markdown';
-	import type { ProjectBySlug$result } from '$houdini';
+	import type { Logos$result, ProjectBySlug$result } from '$houdini';
 	import CodeMd from '$components/Markdown/CodeMD';
 	import LogoCloud from '$components/LogoCloud';
 	import Github from '$icons/Github.svelte';
 
 	export let project: ProjectBySlug$result['projects'][0] | null | undefined;
+
+	const skills = project?.skills?.map((skill) => skill?.item) as
+		| Logos$result['logos']
+		| null
+		| undefined;
 </script>
 
 <div class="project">
@@ -46,9 +51,9 @@
 	{/if}
 
 	<!-- Skill cloud -->
-	{#if project?.skills}
+	{#if skills}
 		<div class="skills p-8 mt-8 border-t border-surface-500-400-token">
-			<LogoCloud logos={project.skills.map((skill) => skill?.item)} />
+			<LogoCloud logos={skills} />
 		</div>
 	{/if}
 </div>

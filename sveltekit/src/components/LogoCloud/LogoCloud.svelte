@@ -11,12 +11,12 @@
 	>
 		{#each logos as brand}
 			<a
-				class="logo-item overflow-hidden w-full aspect-[21/9] flex justify-center items-center group hover:bg-gray-300 dark:hover:bg-gray-200"
+				class="logo-item overflow-hidden w-full aspect-[2] flex justify-center items-center group hover:bg-gray-300 dark:hover:bg-gray-200"
 				href={brand.url}
 				target="_blank"
 			>
 				<img
-					class=" m-4 w-full max-w-[80%] max-h-[80%] grayscale group-hover:grayscale-0"
+					class=" m-4 w-full h-full max-w-[80%] max-h-[80%] grayscale group-hover:grayscale-0 object-contain"
 					src={`${PUBLIC_API_URL}/assets/${brand.logo?.id}`}
 					alt={brand.logo?.title}
 				/>
